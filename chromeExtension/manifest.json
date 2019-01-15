@@ -1,0 +1,27 @@
+{
+  "manifest_version": 2,
+
+  "name": "What-If Score",
+  "description": "This extension will analyze Axis and simulate the Canvas What If Score System",
+  "version": "1.2343453",
+  "author": "Caleb Behunin",
+  "permissions": [
+   "activeTab",
+   "storage",
+   "declarativeContent"
+ ],
+
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "page_action": {
+      "default_popup": "popup.html"
+  },
+     "content_scripts": [
+        {
+           "matches": ["http://oakschristian.myschoolapp.com"],
+           "js": ["contentScript.js"]
+        }
+     ]
+}
