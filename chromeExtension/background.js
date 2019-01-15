@@ -28,4 +28,4 @@ chrome.runtime.onConnect.addListener(function(portFrom) {
 
 //Send a message to a tab which has your content script injected.
 //You should able to use postMessage here as well.
-chrome.tabs.sendMessage(YOUR_TARGET_TAB_ID, {action: 'GET_DIMENSION'});
+chrome.tabs.sendMessage(0, {action: 'GET_DIMENSION'});

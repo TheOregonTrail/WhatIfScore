@@ -20,7 +20,8 @@
   },
      "content_scripts": [
         {
-           "matches": ["http://oakschristian.myschoolapp.com"],
+           "matches": ["http://*/*",
+        "https://*/*"],
            "js": ["contentScript.js"]
         }
      ]
