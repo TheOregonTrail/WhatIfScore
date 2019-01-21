@@ -1,18 +1,8 @@
-//start connection in content script
-let contentPort = chrome.runtime.connect({
-   name: 'background-content'
-});
-
-//Listen for runtime message
-chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
-   //Retrieve offset dimension
-   if(message.action === 'GET_DIMENSION') {
-      contentPort.postMessage({
-         type: 'DIMENSION',
-         payload: {
-            height: document.body.offsetHeight,
-            width: document.body.offsetWidth
-         }
-      });
-   }
-});
+chrome.runtime.onMessage.addListener(
+  function(request, sender, sendResponse) {
+    console.log(sender.tab ?
+                "from a content script:" + sender.tab.url :
+                "from the extension");
+    if (request.message == "DOM")
+      sendResponse({DOM: document.body});
+  });

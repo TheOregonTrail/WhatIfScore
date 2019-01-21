@@ -7,8 +7,8 @@
   "author": "Caleb Behunin",
   "permissions": [
    "activeTab",
-   "storage",
-   "declarativeContent"
+   "declarativeContent",
+   "storage"
  ],
 
   "background": {
@@ -16,13 +16,16 @@
     "persistent": false
   },
   "page_action": {
-      "default_popup": "popup.html"
+      "default_popup": "popup.html",
+      "default_title": "What-If Score"
   },
-     "content_scripts": [
-        {
-           "matches": ["http://*/*",
-        "https://*/*"],
-           "js": ["contentScript.js"]
-        }
-     ]
+  "content_scripts": [
+    {
+      "matches": [
+            "http://*/*",
+            "https://*/*"
+            ],
+      "js": ["contentScript.js"]
+    }
+  ]
 }

@@ -12,20 +12,15 @@ chrome.runtime.onInstalled.addListener(function() {
     }]);
   });
 });
-//background script is always running unless extension
-//is disabled
 
-//Wait for some one connect to it
-let contentPort;
-chrome.runtime.onConnect.addListener(function(portFrom) {
-   if(portFrom.name === 'background-content') {
-      //This is how you add listener to a port.
-      portFrom.onMessage.addListener(function(message) {
-         //Do something to this message(offsetheight and width)
-      });
-   }
+chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+  chrome.tabs.sendMessage(tabs[0].id, {message: "DOM"}, function(response) {
+    chrome.storage.sync.set({testStorageOfDom: response.DOM})
+  });
 });
 
-//Send a message to a tab which has your content script injected.
-//You should able to use postMessage here as well.
-chrome.tabs.sendMessage(0, {action: 'GET_DIMENSION'});
+chrome.runtime(function() {
+  chrome.storage.sync.get(['DOM'], function(result) {
+    console.log("Responce" + result.DOM);
+  })
+})

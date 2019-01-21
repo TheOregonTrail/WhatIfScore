@@ -2,3 +2,8 @@ Check this link out it has a nice extensive example of how the chrome api commun
 with the webpage and the browser.
 
  https://stackoverflow.com/questions/19758028/chrome-extension-get-dom-content
+
+Obviously Chrome Documentation is useful keep studying that
+
+
+Stopped at getting the extension not to error and using the storage api to store the websites document.body element... Maybe
