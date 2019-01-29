@@ -13,14 +13,15 @@ chrome.runtime.onInstalled.addListener(function() {
   });
 });
 
+chrome.pageAction.onClicked.addListener(function(tab) {
 chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+  console.log("sending request...")
   chrome.tabs.sendMessage(tabs[0].id, {message: "DOM"}, function(response) {
-    chrome.storage.sync.set({testStorageOfDom: response.DOM})
+    if(response.farewell === "pizza time") {
+      // chrome.storage.sync.set({testStorageOfDom: response})
+      console.log("message recieved !");
+      console.log(response.farewell);
+    }
   });
 });
-
-chrome.runtime(function() {
-  chrome.storage.sync.get(['DOM'], function(result) {
-    console.log("Responce" + result.DOM);
-  })
 })

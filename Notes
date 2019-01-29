@@ -6,4 +6,9 @@ with the webpage and the browser.
 Obviously Chrome Documentation is useful keep studying that
 
 
-Stopped at getting the extension not to error and using the storage api to store the websites document.body element... Maybe
+Can read the errors and background.js noise in chrome://extensions inspect views
+
+Fix this:
+
+Error in event handler for (unknown): TypeError: Cannot read property 'farewell' of undefined
+    at chrome-extension://lcbeacbmkhgdocdbodjmeibgeopejjji/background.js:20:17

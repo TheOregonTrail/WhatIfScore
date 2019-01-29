@@ -16,7 +16,6 @@
     "persistent": false
   },
   "page_action": {
-      "default_popup": "popup.html",
       "default_title": "What-If Score"
   },
   "content_scripts": [
