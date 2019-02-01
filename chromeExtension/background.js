@@ -16,12 +16,10 @@ chrome.runtime.onInstalled.addListener(function() {
 chrome.pageAction.onClicked.addListener(function(tab) {
 chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
   console.log("sending request...")
-  chrome.tabs.sendMessage(tabs[0].id, {message: "DOM"}, function(response) {
-    if(response.farewell === "pizza time") {
-      // chrome.storage.sync.set({testStorageOfDom: response})
+  chrome.tabs.sendMessage(tabs[0].id, {message: "start"}, function(response) {
+    if(response.farewell === "recieved !") {
       console.log("message recieved !");
-      console.log(response.farewell);
     }
   });
 });
-})
+});

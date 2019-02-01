@@ -16,14 +16,12 @@
     "persistent": false
   },
   "page_action": {
-      "default_title": "What-If Score"
+      "default_title": "What-If Score",
+      "js": "popup.js"
   },
   "content_scripts": [
     {
-      "matches": [
-            "http://*/*",
-            "https://*/*"
-            ],
+      "matches": ["https://oakschristian.myschoolapp.com/*"],
       "js": ["contentScript.js"]
     }
   ]

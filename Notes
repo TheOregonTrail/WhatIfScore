@@ -12,3 +12,14 @@ Fix this:
 
 Error in event handler for (unknown): TypeError: Cannot read property 'farewell' of undefined
     at chrome-extension://lcbeacbmkhgdocdbodjmeibgeopejjji/background.js:20:17
+
+
+
+
+
+Planned Control Flow of Extension:
+
+-Content Scripts fire (website data,)
+-- Content Sends Data to Background and Other script sends data to Background
+--- Data is sent both to content.js and popup.js
+---- DOM of content.js is replaced or "fixed"
