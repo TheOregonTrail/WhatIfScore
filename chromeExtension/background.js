@@ -17,7 +17,7 @@ chrome.pageAction.onClicked.addListener(function(tab) {
 chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
   console.log("sending request...")
   chrome.tabs.sendMessage(tabs[0].id, {message: "start"}, function(response) {
-    if(response.farewell === "recieved !") {
+    if(response.farewell == "recieved !") {
       console.log("message recieved !");
     }
   });
