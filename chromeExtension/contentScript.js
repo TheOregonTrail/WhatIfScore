@@ -16,15 +16,14 @@ const classCategories = {
   SpeakingListening : "6213",
   Classwork : "5695"
 }
-// STUCK HERE, Can't treat class properties like an Array therefore their compare has to be different
-let classArr
+// Returns a tuple array of both the name of the id and the id # itself
+let classArr = [];
 function getCategorieHeader(classCategories) {
   let divList = document.body.getElementsByTagName("div");
-  for(let i = 0; i < classCategories.length; i++) {
-    for(let o = 0; o < divList.length; o++) {
-      if(divList[o].id == classCategories[i]) {
-        classArr.push(classCategories[i]);
-        i = 0;
+  for(var i = 0; i < divList.length; i++) {
+    for(var o in classCategories) {
+      if(divList[i].id === classCategories[o]) {
+        classArr.push(o , classCategories[o]);
       }
     }
   }
