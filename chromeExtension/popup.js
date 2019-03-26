@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  var submit = document.body.getElementsByTagName("button")[0];
+  var submit = document.body.getElementsById("submit_button")[0];
 
 submit.addEventListener("click", function(tab) {
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {

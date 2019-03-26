@@ -13,6 +13,7 @@ chrome.runtime.onInstalled.addListener(function() {
   });
 });
 
+/*
 chrome.pageAction.onClicked.addListener(function(tab) {
 chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
   console.log("sending request...")
@@ -23,3 +24,4 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
   });
 });
 });
+*/

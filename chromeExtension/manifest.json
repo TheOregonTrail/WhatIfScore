@@ -17,7 +17,8 @@
   },
   "page_action": {
       "default_title": "What-If Score",
-      "js": "popup.js"
+      "js": "popup.js",
+      "popup": "popup.html"
   },
   "content_scripts": [
     {
