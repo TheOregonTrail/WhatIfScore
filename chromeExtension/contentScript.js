@@ -1,34 +1,36 @@
 
-// All the class Categories that make up the total grade
-const classCategories = {
-  Homework : "5689",
-  Essay : "5696",
-  Quiz : "5690",
-  Writing : "5701",
-  Project : "5692",
-  Participation : "5694",
-  ProjectsTests : "6163",
-  ParticipationHomework : "6214",
-  Exam : "5700",
-  Lab : "5693",
-  Test : "5691",
-  ReadingWriting : "6212",
-  SpeakingListening : "6213",
-  Classwork : "5695"
-}
-// Returns a tuple array of both the name of the id and the id # itself
+// All the class Categories that make up the total grade in a class
+const classCategories = [
+  {"name" : "Homework", "id" : "5689"},
+  {"name" : "Essay", "id" : "5696"},
+  {"name" : "Quiz", "id" : "5690"},
+  {"name" : "Writing", "id" : "5701"},
+  {"name" : "Project", "id" : "5692"},
+  {"name" : "Participation", "id" : "5694"},
+  {"name" : "Project & Tests", "id" : "6163"},
+  {"name" : "Participation & Homework", "id" : "6214"},
+  {"name" : "Exam", "id" : "5700"},
+  {"name" : "Lab", "id" : "5693"},
+  {"name" : "Test", "id" : "5691"},
+  {"name" : "Reading & Writing", "id" : "6212"},
+  {"name" : "Speaking & Listening", "id" : "6213"},
+  {"name" : "Classwork", "id" : "5695"}
+  
+]
+// Returns a array of an array that has each instace of the classCategories and their code
 let classArr = [];
 function getCategorieHeader(classCategories) {
   let divList = document.body.getElementsByTagName("div");
   for(var i = 0; i < divList.length; i++) {
-    for(var o in classCategories) {
-      if(divList[i].id === classCategories[o]) {
-        classArr.push(o , classCategories[o]);
+    for(var e = 0;  e < classCategories.length; e++) {
+      if(classCategories[e].id === divList[i].id) {
+        classArr.push(classCategories[e].name);
       }
     }
   }
   return classArr;
 }
+
 
 let buff = [];
 let table = document.getElementsByClassName("table table-striped table-condensed table-mobile-stacked");
