@@ -24,13 +24,22 @@ function getCategorieHeader(classCategories) {
   for(var i = 0; i < divList.length; i++) {
     for(var e = 0;  e < classCategories.length; e++) {
       if(classCategories[e].id === divList[i].id) {
-        classArr.push(classCategories[e].name);
+        if(classCategories[e].name in classArr) {
+          continue
+        }
+        else {
+          classArr.push(classCategories[e].name);
+        }
       }
     }
   }
   return classArr;
 }
-
+let categories = getCategorieHeader(classCategories)
+chrome.storage.sync.set(
+  {"categorieNames" : categories}, function() {
+    console.log("Logged " + categories.toString + " and Recorded it to Local Drive");
+  });
 
 let buff = [];
 let table = document.getElementsByClassName("table table-striped table-condensed table-mobile-stacked");
