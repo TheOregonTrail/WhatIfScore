@@ -36,7 +36,7 @@ function getCategorieHeader(classCategories) {
   return classArr;
 }
 let categories = getCategorieHeader(classCategories)
-chrome.storage.sync.set(
+chrome.storage.local.set(
   {"categorieNames" : categories}, function() {
     console.log("Logged " + categories.toString + " and Recorded it to Local Drive");
   });

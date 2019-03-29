@@ -3,6 +3,18 @@
 	font-size: small;
 }
 
+h1 {
+	font-size: large
+}
+
+table, th, td {
+	border: 2px solid rgb(6, 130, 231);
+
+}
+
+table {
+	width: 10px;
+}
 body {
 	background-color: white;
 	padding: 4px;
@@ -17,7 +29,7 @@ input[type="submit"], input[type="url"] {
 }
 
 input[type="submit"] {
-	background-color: #00AAFF;
+	background-color: palevioletred;
 	border: none;
 	color: white;
 	cursor: pointer;
@@ -25,9 +37,9 @@ input[type="submit"] {
 }
 
 input[type="submit"]:hover {
-	background-color: #33BBFF;
+	background-color: purple;
 }
 
 input[type="submit"]:active {
-	background-color: #0088CC;
+	background-color: rgb(136, 3, 58);
 }

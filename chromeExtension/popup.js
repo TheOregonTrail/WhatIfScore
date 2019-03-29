@@ -1,18 +1,16 @@
-document.addEventListener("DOMContentLoaded", function () {
-  var submit = document.body.getElementsById("submit_button")[0];
+document.addEventListener("DOMContentLoaded", function() {
+  
+  function fetchCategories() {
+    chrome.storage.local.get(['categorieNames'], function(result) {
+      console.log("Value fetched from local storage is " + result.key);
+      return result.key;
+    })
+  }
 
-submit.addEventListener("click", function(tab) {
-  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-    chrome.tabs.executeScript(tabs[0].id, {
-      file: "some_script.js"
-    }), function(){
-        chrome.tabs.sendMessage(tabs[0].id, {
-          updateTextTo: updateTextTo
-        })
-      }
-  })
-});
-});
+  // Modify Forms and Such here in the popup and reload it somehow ?
 
+  let submit = document.getElementsById("submit");
+  submit.addEventListener("clicked", function() {
 
-// https://stackoverflow.com/questions/40645538/communicate-data-from-popup-to-content-script-injected-by-popup-with-executescri/40666096
+  }
+}

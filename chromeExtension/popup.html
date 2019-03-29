@@ -1,17 +1,26 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>What-If Score Analyzer</title>
+    <title>What-If Score Tool</title>
+    <link rel="stylesheet" type="text/css" href="popup.css">
   </head>
   <body>
-    <h1> What If-Score :/ </h1>
-    <form>
-        Weight Of Section: <input type="text" name="weight">
-        <br>
-        Test Text Box: <input type="text" name="test">
-        <br>
-        Event: <input id = "submit_button" type = "submit">
-      </form>
+    <h1> What If-Score (+_+) </h1>
+    <table>
+      <tr>
+          <th> Categorie Name </th>
+          <th> Weight </th>
+      </tr>
+      <div>
+        <tr >
+          <td> Demo Categorie </td>
+          <td> <form> <input type="number" value="33.3"></form></td>
+        </tr>
+      </div>
+    </table>
+    <input id="enabled" type="checkbox">
+    <label for="enabled">Enabled</label>
+    <input id="submit" type="submit" value="Save">
     <script src="popup.js"></script>
   </body>
 </html>
