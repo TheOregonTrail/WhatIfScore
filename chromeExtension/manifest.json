@@ -22,7 +22,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://oakschristian.myschoolapp.com/app/student#studentmyday/progress"],
+      "matches": ["https://oakschristian.myschoolapp.com/app/*"],
       "js": ["contentScript.js",
             "websiteMarkup.js"]
     }

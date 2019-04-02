@@ -46,6 +46,6 @@ let table = document.getElementsByClassName("table table-striped table-condensed
 for(let x = 0; x < table.length; x++) {
   buff.push(table[x])
 }
-function getCategoriePoints() {
+function changeToForm() {
 
 }
