@@ -18,13 +18,12 @@
   "page_action": {
       "default_title": "What-If Score",
       "js": "popup.js",
-      "popup": "popup.html"
+      "default_popup": "popup.html"
   },
   "content_scripts": [
     {
       "matches": ["https://oakschristian.myschoolapp.com/app/*"],
-      "js": ["contentScript.js",
-            "websiteMarkup.js"]
+      "js": ["contentScript.js"]
     }
   ]
 }

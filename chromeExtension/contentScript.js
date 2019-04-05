@@ -16,36 +16,97 @@ const classCategories = [
   {"name" : "Speaking & Listening", "id" : "6213"},
   {"name" : "Classwork", "id" : "5695"}
   
-]
-// Returns a array of an array that has each instace of the classCategories and their code
-let classArr = [];
-function getCategorieHeader(classCategories) {
-  let divList = document.body.getElementsByTagName("div");
-  for(var i = 0; i < divList.length; i++) {
-    for(var e = 0;  e < classCategories.length; e++) {
-      if(classCategories[e].id === divList[i].id) {
-        if(classCategories[e].name in classArr) {
-          continue
-        }
-        else {
-          classArr.push(classCategories[e].name);
+];
+
+console.log("Is this running ?");
+let gradeDetailBut = document.querySelectorAll("a.btn.btn-default");
+for(let i = 2; i < gradeDetailBut.length; i++) {
+  
+  gradeDetailBut[i].addEventListener("click", function() {
+    // Makes sure it runs in context... hopefully
+    document.addEventListener("DOMContentLoaded", function() {
+      
+      let classArr = [];
+    function getCategorieHeader(classCategories) {
+      let divList = document.body.getElementsByTagName("div");
+      for(var i = 0; i < divList.length; i++) {
+        for(var e = 0;  e < classCategories.length; e++) {
+          if(classCategories[e].id === divList[i].id) {
+            if(classCategories[e].name in classArr) {
+              continue
+            }
+            else {
+              classArr.push(classCategories[e].name);
+            }
+          }
         }
       }
+      return classArr;
     }
-  }
-  return classArr;
-}
-let categories = getCategorieHeader(classCategories)
-chrome.storage.local.set(
-  {"categorieNames" : categories}, function() {
-    console.log("Logged " + categories.toString + " and Recorded it to Local Drive");
-  });
+    let categories = getCategorieHeader(classCategories)
+    chrome.storage.local.set(
+      {"categorieNames" : categories}, function() {
+        console.log("Logged " + categories.toString + " and Recorded it to Local Drive");
+      });
 
-let buff = [];
-let table = document.getElementsByClassName("table table-striped table-condensed table-mobile-stacked");
-for(let x = 0; x < table.length; x++) {
-  buff.push(table[x])
+    let buff = [];
+    let table = document.getElementsByClassName("table table-striped table-condensed table-mobile-stacked");
+    for(let x = 0; x < table.length; x++) {
+      buff.push(table[x])
+    }
+    })
+    chrome.runtime.sendMessage({nudge: "run"}, function(message) {
+      console.log(message.response);
+    });
+  })
+  // returns true if see grade detail is pressed
 }
-function changeToForm() {
 
-}
+  
+
+
+
+
+
+
+
+
+
+
+//   if(check) {
+
+  //   // Returns a array of an array that has each instace of the classCategories and their code
+
+  //   let classArr = [];
+  //   function getCategorieHeader(classCategories) {
+  //     let divList = document.body.getElementsByTagName("div");
+  //     for(var i = 0; i < divList.length; i++) {
+  //       for(var e = 0;  e < classCategories.length; e++) {
+  //         if(classCategories[e].id === divList[i].id) {
+  //           if(classCategories[e].name in classArr) {
+  //             continue
+  //           }
+  //           else {
+  //             classArr.push(classCategories[e].name);
+  //           }
+  //         }
+  //       }
+  //     }
+  //     return classArr;
+  //   }
+  //   let categories = getCategorieHeader(classCategories)
+  //   chrome.storage.local.set(
+  //     {"categorieNames" : categories}, function() {
+  //       console.log("Logged " + categories.toString + " and Recorded it to Local Drive");
+  //     });
+
+  //   let buff = [];
+  //   let table = document.getElementsByClassName("table table-striped table-condensed table-mobile-stacked");
+  //   for(let x = 0; x < table.length; x++) {
+  //     buff.push(table[x])
+  //   }
+  //   function changeToForm() {
+
+  //   }
+  //   break;
+  // }
