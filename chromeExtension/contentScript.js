@@ -18,95 +18,64 @@ const classCategories = [
   
 ];
 
-console.log("Is this running ?");
-let gradeDetailBut = document.querySelectorAll("a.btn.btn-default");
-for(let i = 2; i < gradeDetailBut.length; i++) {
-  
-  gradeDetailBut[i].addEventListener("click", function() {
-    // Makes sure it runs in context... hopefully
-    document.addEventListener("DOMContentLoaded", function() {
-      
-      let classArr = [];
-    function getCategorieHeader(classCategories) {
-      let divList = document.body.getElementsByTagName("div");
-      for(var i = 0; i < divList.length; i++) {
-        for(var e = 0;  e < classCategories.length; e++) {
-          if(classCategories[e].id === divList[i].id) {
-            if(classCategories[e].name in classArr) {
-              continue
+
+// window.addEventListener("hashchange", function() {
+//   let url = location.hash;
+//   if(url === "#studentmyday/progress") {
+//     let nothing = 0;
+//   }
+// })
+
+// Hardcoded timed function to grab the headings of classes
+setTimeout(function(){
+  console.log("Button Ready");
+  let gradeDetailBut = document.querySelectorAll("a.btn.btn-default");
+  for(let i = 2; i < gradeDetailBut.length; i++) {
+    
+    gradeDetailBut[i].addEventListener("click", function() {
+        setTimeout(function(){
+
+          let classArr = [];
+          function getCategorieHeader(classCategories) {
+            let divList = document.body.getElementsByTagName("div");
+            for(var i = 0; i < divList.length; i++) {
+              for(var e = 0;  e < classCategories.length; e++) {
+                if(classCategories[e].id === divList[i].id) {
+                  if(classCategories[e].name in classArr) {
+                    continue
+                  }
+                  else {
+                    classArr.push(classCategories[e].name);
+                  }
+                }
+              }
             }
-            else {
-              classArr.push(classCategories[e].name);
-            }
+            console.log(classArr);
+            return classArr;
           }
-        }
-      }
-      return classArr;
-    }
-    let categories = getCategorieHeader(classCategories)
-    chrome.storage.local.set(
-      {"categorieNames" : categories}, function() {
-        console.log("Logged " + categories.toString + " and Recorded it to Local Drive");
-      });
 
-    let buff = [];
-    let table = document.getElementsByClassName("table table-striped table-condensed table-mobile-stacked");
-    for(let x = 0; x < table.length; x++) {
-      buff.push(table[x])
+          let categories = getCategorieHeader(classCategories);
+          console.log(categories);
+          // saves categories to local drive
+          chrome.storage.local.set(
+            {"categorieNames" : categories}, function() {
+              console.log("Logged " + categories + " and Recorded it to Local Drive");
+            });
+            // activates popup script
+          chrome.runtime.sendMessage({nudge: "run"}, function(response) {
+            console.log(response.message);
+          })
+        },3000)
+      })
     }
-    })
-    chrome.runtime.sendMessage({nudge: "run"}, function(message) {
-      console.log(message.response);
-    });
-  })
-  // returns true if see grade detail is pressed
-}
-
+  },5000)
   
-
-
-
-
-
-
-
-
-
-
-//   if(check) {
-
-  //   // Returns a array of an array that has each instace of the classCategories and their code
-
-  //   let classArr = [];
-  //   function getCategorieHeader(classCategories) {
-  //     let divList = document.body.getElementsByTagName("div");
-  //     for(var i = 0; i < divList.length; i++) {
-  //       for(var e = 0;  e < classCategories.length; e++) {
-  //         if(classCategories[e].id === divList[i].id) {
-  //           if(classCategories[e].name in classArr) {
-  //             continue
-  //           }
-  //           else {
-  //             classArr.push(classCategories[e].name);
-  //           }
-  //         }
-  //       }
-  //     }
-  //     return classArr;
-  //   }
-  //   let categories = getCategorieHeader(classCategories)
-  //   chrome.storage.local.set(
-  //     {"categorieNames" : categories}, function() {
-  //       console.log("Logged " + categories.toString + " and Recorded it to Local Drive");
-  //     });
-
-  //   let buff = [];
-  //   let table = document.getElementsByClassName("table table-striped table-condensed table-mobile-stacked");
-  //   for(let x = 0; x < table.length; x++) {
-  //     buff.push(table[x])
-  //   }
-  //   function changeToForm() {
-
-  //   }
-  //   break;
-  // }
+        
+        
+      // For When I get the time to actually fetch the points
+      //   let buff = [];
+      //   let table = document.getElementsByClassName("table table-striped table-condensed table-mobile-stacked");
+      //   for(let x = 0; x < table.length; x++) {
+      //     buff.push(table[x])
+      //   }
+      // })
