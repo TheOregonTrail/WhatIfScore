@@ -43,6 +43,7 @@ chrome.runtime.onMessage.addListener(
 
       // update the table with all the categorie names and corresponding forms
       chrome.storage.local.get(['categorieNames'], function(result) {
+        document.getElementById("wait").remove();
         for(let i = 0; i < result.categorieNames.length; i++) {
           updatePopup(result.categorieNames[i]);
         }
@@ -55,39 +56,3 @@ chrome.runtime.onMessage.addListener(
       })
     }
   })
-
-  
-
-      
-      // function updatePopup(categorie) {
-      //   // Make first <td> and append categorie's name to it
-      //   let categorieName = document.createElement("td");
-      //   let node = document.createTextNode(categorie.toString());
-
-      // // All neccessary to make a form in the second <td> tag
-      // //Uneccessary indent to show they are related
-      //   let weight = document.createElement("td");
-      //     let form = document.createElement("form");
-      //       let input = document.createElement("input");
-      //   input.type = "number";
-      //   input.value = "33.3";
-      //   let row = document.createElement("tr");
-
-      // // Do all the dirty html appending
-      //   categorieName.appendChild(node);
-      //   let tableId = document.getElementById("categories");
-      //   tableId.appendChild(categorieName);
-      //   tableId.appendChild(weight.appendChild(form).appendChild(input));
-      //   tableId.appendChild(row);
-      // }
-      // // update the table with all the categorie names and corresponding forms
-      // for(let i = 0; i < categories.length; i++) {
-      //   updatePopup(categories[i]);
-      // }
-      // console.log("Table Updated With Categories");
-      // // Run button
-      // let submit = document.getElementById("submit");
-      // submit.addEventListener("clicked", function(){
-      //   console.log("Submit button works");
-      // })
-
