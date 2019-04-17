@@ -39,10 +39,14 @@ setTimeout(function(){
             let h4 = document.getElementsByTagName("h4");
             let parent = document.getElementsByClassName("col-md-2");
         
+            // FIX: Add the muted attribute to the span tag 
+            // Added or statement because if a 0 was present the expression would eval false
             for(let i = 0; i < h4.length; i++) {
-                if(parseFloat(h4[i].firstChild.data)) {
+                if(parseFloat(h4[i].firstChild.data) === 0 || parseFloat(h4[i].firstChild.data)) {
             
                     let form = document.createElement("form");
+                    form.setAttribute("id", "forms");
+                    form.class = "newPoints";
                     let input = document.createElement("input");
                     let totalPoints = document.createElement("h4");
             
@@ -59,6 +63,18 @@ setTimeout(function(){
                     parent[i + 5].appendChild(totalPoints);
             
                 }
+            }
+          }
+
+
+          function addFormEvents() {
+            let forms = document.getElementsByClassName("newPoints");
+
+            for (let x = 0; x < forms[i]; i ++) {
+              // Interupt the native reaction to enter
+              forms[i].addEventListener("submit", function(e){
+                e.preventDefault();
+              })
             }
           }
 
@@ -81,15 +97,35 @@ setTimeout(function(){
             return classArr;
           }
 
-          let categories = getCategorieHeader(classCategories);
-          console.log(categories);
+          let categorieNames = getCategorieHeader(classCategories);
+          console.log(categorieNames);
+          function getPointsPerCategorie(categorieNames) {
+            let categorieTables = document.getElementsByClassName("table table-striped table-condensed table-mobile-stacked");
+            let completeTables = [], pointsPerCategorie = [],points;
+            for(let x = 0; x < categorieTables.length; x++) {
+              pointsPerCategorie = categorieTables[x].getElementsByTagName("h4");
+              completeTables.push([categorieNames[x]])
+              
+              for(let y = 0; y < pointsPerCategorie.length; y++) {
+                points = parseFloat(pointsPerCategorie[y].firstChild.data);
+                completeTables[x].push(points);
+            }
+          }
+            return completeTables;
+          }
+
+          console.log(getPointsPerCategorie(categorieNames));
           // saves categories to local drive
           chrome.storage.local.set(
-            {"categorieNames" : categories}, function() {
+            {"categorieNames" : categorieNames,}, function() {
               console.log("Logged " + categories + " and Recorded it to Local Drive");
             });
             //Converts Point boxs to forms
             convertToForm();
+
+            // Listens for the form's tags "enter" event
+            docume 
+
             // activates popup script
           chrome.runtime.sendMessage({nudge: "run"}, function(response) {
             console.log(response.message);

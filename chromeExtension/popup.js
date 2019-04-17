@@ -8,9 +8,7 @@ chrome.runtime.onMessage.addListener(
     if (request.nudge == "run") {
       sendResponse({message: "Message Recieved @ popup.js"});
 
-      // Fix Bug: Forms are Highlighed Red probably because of css
-
-      // IT FREAKING WORKS 
+      // IT FREAKING WORKS !
       // Appends categorie to Chrome Extension !
     
       function updatePopup(categorie) {
@@ -28,6 +26,7 @@ chrome.runtime.onMessage.addListener(
         let row = document.createElement("tr");
 
       // Do all the dirty html appending
+      // append the new elements to the chrome extensions "table"
         categorieName.appendChild(node);
         let tableId = document.getElementById("categories");
         tableId.appendChild(categorieName);
