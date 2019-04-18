@@ -45,7 +45,7 @@ setTimeout(function(){
                 if(parseFloat(h4[i].firstChild.data) === 0 || parseFloat(h4[i].firstChild.data)) {
             
                     let form = document.createElement("form");
-                    form.setAttribute("id", "forms");
+                    form.setAttribute("class", "forms");
                     form.class = "newPoints";
                     let input = document.createElement("input");
                     let totalPoints = document.createElement("h4");
@@ -101,46 +101,70 @@ setTimeout(function(){
           console.log(categorieNames);
           function getPointsPerCategorie(categorieNames) {
             let categorieTables = document.getElementsByClassName("table table-striped table-condensed table-mobile-stacked");
-            let completeTables = [], pointsPerCategorie = [],points;
+            let completeTables = [];
             for(let x = 0; x < categorieTables.length; x++) {
-              pointsPerCategorie = categorieTables[x].getElementsByTagName("h4");
-              completeTables.push([categorieNames[x]])
-              
+              completeTables.push(categorieNames[x]);
+              let pointsPerCategorie = categorieTables[x].getElementsByTagName("form");
+              let afterSlash = categorieTables[x].getElementsByTagName("h4");
+              let percents = [];
               for(let y = 0; y < pointsPerCategorie.length; y++) {
-                points = parseFloat(pointsPerCategorie[y].firstChild.data);
-                completeTables[x].push(points);
+                let points = parseFloat(pointsPerCategorie[y].firstChild.value);
+                
+                percents.push(points / parseFloat(afterSlash[y].innerText.slice(1,afterSlash[y].innerText.length)));
             }
+            completeTables.push(percents);
           }
             return completeTables;
           }
 
-          console.log(getPointsPerCategorie(categorieNames));
+    
           // saves categories to local drive
           chrome.storage.local.set(
             {"categorieNames" : categorieNames,}, function() {
-              console.log("Logged " + categories + " and Recorded it to Local Drive");
+              console.log("Logged " + categorieNames + " and Recorded it to Local Drive");
             });
             //Converts Point boxs to forms
             convertToForm();
 
-            // Listens for the form's tags "enter" event
-            docume 
-
+            // Log Points in each categorie
+            let nameAndPointsInCategories = getPointsPerCategorie(categorieNames);
+            console.log(nameAndPointsInCategories);
+            
             // activates popup script
           chrome.runtime.sendMessage({nudge: "run"}, function(response) {
             console.log(response.message);
           })
+
+          let weights = [];
+          chrome.runtime.onMessage.addListener(
+            function(request, sender, sendResponse) {
+              console.log(sender.tab ?
+                          "from a content script:" + sender.tab.url :
+                          "from the extension");
+              if (request.message == "run")
+                sendResponse({message: "Recieved @ Content Script"});
+                for(let x = 0; x < categorieNames.length; x++) {
+                  chrome.storage.local.get([categorieNames[x]], function(result) {
+                    console.log(result);
+                    weights.push(result);
+                  })
+                }
+
+                function enterKey(e) {
+                  var keycode = (e.keyCode ? e.keyCode : e.which);
+                  if (keycode == '13') {
+                    let totalPoints = pointsPerCategorie(categorieNames);
+                  }
+                }
+                let numOfForms = document.getElementsByClassName("forms");
+                for(let i = 0; i < numOfForms.length; i++) {
+                  numOfForms[i].addEventListener("keypress", enterKey)
+                }
+              
+            });
         },3000)
       })
     }
   },5000)
   
-        
-        
-      // For When I get the time to actually fetch the points
-      //   let buff = [];
-      //   let table = document.getElementsByClassName("table table-striped table-condensed table-mobile-stacked");
-      //   for(let x = 0; x < table.length; x++) {
-      //     buff.push(table[x])
-      //   }
-      // })
+  

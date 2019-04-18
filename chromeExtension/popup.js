@@ -14,6 +14,7 @@ chrome.runtime.onMessage.addListener(
       function updatePopup(categorie) {
         // Make first <td> and append categorie's name to it
         let categorieName = document.createElement("td");
+        categorieName.setAttribute("class", "categorieName");
         let node = document.createTextNode(categorie.toString());
 
       // All neccessary to make a form in the second <td> tag
@@ -21,6 +22,7 @@ chrome.runtime.onMessage.addListener(
         let weight = document.createElement("td");
           let form = document.createElement("form");
             let input = document.createElement("input");
+            input.setAttribute("class", "weight");
         input.type = "number";
         input.value = "33.3";
         let row = document.createElement("tr");
@@ -50,8 +52,22 @@ chrome.runtime.onMessage.addListener(
       })
       // Run button
       let submit = document.getElementById("submit");
-      submit.addEventListener("clicked", function(){
-        console.log("Submit button works");
+      submit.addEventListener("click", function(){
+        submit.value = "Weights Saved";
+
+        let categorieName = document.getElementsByClassName("categorieName");
+        let weight = document.getElementsByClassName("weight");
+        for(var i = 0; i < categorieName.length; i++) {
+          //WHY DOES THIS WORK
+          chrome.storage.local.set({[categorieName[i].innerText.toString()]: weight[i].value})
+        }
+        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+          
+          chrome.tabs.sendMessage(tabs[0].id, {message: "run"}, function(response) {
+            console.log(response.message);
+          });
+        });
+        console.log(weight + "\n" + categorieName);
       })
     }
   })
