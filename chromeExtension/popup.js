@@ -11,7 +11,7 @@ chrome.runtime.onMessage.addListener(
       // IT FREAKING WORKS !
       // Appends categorie to Chrome Extension !
     
-      function updatePopup(categorie) {
+      function updatePopup(categorie, length) {
         // Make first <td> and append categorie's name to it
         let categorieName = document.createElement("td");
         categorieName.setAttribute("class", "categorieName");
@@ -24,7 +24,7 @@ chrome.runtime.onMessage.addListener(
             let input = document.createElement("input");
             input.setAttribute("class", "weight");
         input.type = "number";
-        input.value = "33.3";
+        input.value = (100 / length).toFixed(4);
         let row = document.createElement("tr");
 
       // Do all the dirty html appending
@@ -46,7 +46,7 @@ chrome.runtime.onMessage.addListener(
       chrome.storage.local.get(['categorieNames'], function(result) {
         document.getElementById("wait").remove();
         for(let i = 0; i < result.categorieNames.length; i++) {
-          updatePopup(result.categorieNames[i]);
+          updatePopup(result.categorieNames[i], result.categorieNames.length);
         }
         console.log("Table Updated With Categories " + result.categorieNames + " ");
       })

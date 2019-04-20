@@ -89,6 +89,8 @@ window.addEventListener("hashchange", function() {
             function getPointsPerCategorie() {
               let categorieTables = document.getElementsByClassName("table table-striped table-condensed table-mobile-stacked");
               let completeTables = [];
+              let earnedPoints = 0;
+              let pointsPossible = 0;
               for(let x = 0; x < categorieTables.length; x++) {
                 let pointsPerCategorie = categorieTables[x].getElementsByTagName("form");
                 let afterSlash = categorieTables[x].getElementsByTagName("h4");
@@ -96,17 +98,15 @@ window.addEventListener("hashchange", function() {
                 for(let y = 0; y < pointsPerCategorie.length; y++) {
                   let points = parseFloat(pointsPerCategorie[y].firstChild.value);
                   
-                  if(afterSlash[y].innerText.slice(1,afterSlash[y].innerText.length) == 0) {
-                    percents.push(points / 1);
-                  }
-                  else {
-                    percents.push(points / parseFloat(afterSlash[y].innerText.slice(1,afterSlash[y].innerText.length)));
-                  }
+                    earnedPoints += points;
+
+                    pointsPossible += parseFloat(afterSlash[y].innerText.slice(1,afterSlash[y].innerText.length));
               }
-              completeTables.push(percents);
+              completeTables.push( earnedPoints / pointsPossible);
             }
               return completeTables;
             }
+            
 
             function activatePopup() {
               // Sends a message to the popup script which starts it
@@ -158,23 +158,25 @@ window.addEventListener("hashchange", function() {
                       console.log(totalPoints);
 
 
-                      var buff = [];
+                      let buff = [];
+                      let totalWeight = 0;
                       for(let x = 0; x < totalPoints.length; x++) {
                         let sum = 0;
+                        totalWeight += weights[x];
 
-                        for(let y = 0; y < totalPoints[x].length; y++) {
-                          sum += totalPoints[x][y] * (weights[x] / totalPoints[x].length);
-                        }
+                        sum += (totalPoints[x] * (weights[x]));
                         buff.push(sum);
                       }
 
-                      console.log("Sum of all the points " + buff);
+                      console.log(" all the percentages " + buff);
                       var grade = 0;
                       for(let i = 0; i < buff.length; i++){
                         grade += buff[i];
                       }
-                      console.log(grade);
-
+                      
+                      grade /= totalWeight;
+                      console.log("Total Percentage of categories of grade added up = " + totalWeight);
+                      console.log("Total Grade should be " + grade);
                       let displayedPercent = document.getElementsByTagName("h1")[1];
                       displayedPercent.innerText = grade.toFixed(4) * 100;
                     }
