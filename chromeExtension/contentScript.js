@@ -14,7 +14,9 @@ const classCategories = [
   {"name" : "Test", "id" : "5691"},
   {"name" : "Reading & Writing", "id" : "6212"},
   {"name" : "Speaking & Listening", "id" : "6213"},
-  {"name" : "Classwork", "id" : "5695"}
+  {"name" : "Classwork", "id" : "5695"},
+  {"name" : "Reading", "id" : "5698"},
+  {"name" : "Speaking", "id" : "6067"}
   
 ];
 
@@ -55,7 +57,7 @@ setTimeout(function(){
                     totalPoints.look.appendChild(document.createTextNode(h4[i].firstElementChild.innerText))
                     totalPoints.appendChild(totalPoints.look);
             
-                    input.type = "number";
+                    input.type = "float";
                     input.value = h4[i].firstChild.data;
             
                     form.appendChild(input);
@@ -66,17 +68,6 @@ setTimeout(function(){
             }
           }
 
-
-          function addFormEvents() {
-            let forms = document.getElementsByClassName("newPoints");
-
-            for (let x = 0; x < forms[i]; i ++) {
-              // Interupt the native reaction to enter
-              forms[i].addEventListener("submit", function(e){
-                e.preventDefault();
-              })
-            }
-          }
 
           let classArr = [];
           function getCategorieHeader(classCategories) {
@@ -97,20 +88,24 @@ setTimeout(function(){
             return classArr;
           }
 
-          let categorieNames = getCategorieHeader(classCategories);
+          var categorieNames = getCategorieHeader(classCategories);
           console.log(categorieNames);
-          function getPointsPerCategorie(categorieNames) {
+          function getPointsPerCategorie() {
             let categorieTables = document.getElementsByClassName("table table-striped table-condensed table-mobile-stacked");
             let completeTables = [];
             for(let x = 0; x < categorieTables.length; x++) {
-              completeTables.push(categorieNames[x]);
               let pointsPerCategorie = categorieTables[x].getElementsByTagName("form");
               let afterSlash = categorieTables[x].getElementsByTagName("h4");
               let percents = [];
               for(let y = 0; y < pointsPerCategorie.length; y++) {
                 let points = parseFloat(pointsPerCategorie[y].firstChild.value);
                 
-                percents.push(points / parseFloat(afterSlash[y].innerText.slice(1,afterSlash[y].innerText.length)));
+                if(afterSlash[y].innerText.slice(1,afterSlash[y].innerText.length) == 0) {
+                  percents.push(points / 1);
+                }
+                else {
+                  percents.push(points / parseFloat(afterSlash[y].innerText.slice(1,afterSlash[y].innerText.length)));
+                }
             }
             completeTables.push(percents);
           }
@@ -135,7 +130,7 @@ setTimeout(function(){
             console.log(response.message);
           })
 
-          let weights = [];
+          var weights = [];
           chrome.runtime.onMessage.addListener(
             function(request, sender, sendResponse) {
               console.log(sender.tab ?
@@ -145,17 +140,40 @@ setTimeout(function(){
                 sendResponse({message: "Recieved @ Content Script"});
                 for(let x = 0; x < categorieNames.length; x++) {
                   chrome.storage.local.get([categorieNames[x]], function(result) {
-                    console.log(result);
-                    weights.push(result);
+                    weights.push(result[categorieNames[x]]);
                   })
                 }
+                console.log(weights);
 
                 function enterKey(e) {
                   var keycode = (e.keyCode ? e.keyCode : e.which);
                   if (keycode == '13') {
-                    let totalPoints = pointsPerCategorie(categorieNames);
+                    var totalPoints = getPointsPerCategorie();
+                    console.log(totalPoints);
+
+
+                    var buff = [];
+                    for(let x = 0; x < totalPoints.length; x++) {
+                      let sum = 0;
+
+                      for(let y = 0; y < totalPoints[x].length; y++) {
+                        sum += totalPoints[x][y] * (weights[x] / totalPoints[x].length);
+                      }
+                      buff.push(sum);
+                    }
+
+                    console.log("Sum of all the points " + buff);
+                    var grade = 0;
+                    for(let i = 0; i < buff.length; i++){
+                      grade += buff[i];
+                    }
+                    console.log(grade);
+
+                    let displayedPercent = document.getElementsByTagName("h1")[1];
+                    displayedPercent.innerText = grade.toFixed(4) * 100;
                   }
                 }
+
                 let numOfForms = document.getElementsByClassName("forms");
                 for(let i = 0; i < numOfForms.length; i++) {
                   numOfForms[i].addEventListener("keypress", enterKey)
@@ -165,6 +183,6 @@ setTimeout(function(){
         },3000)
       })
     }
-  },5000)
+  },2000)
   
   

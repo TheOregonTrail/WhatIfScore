@@ -59,7 +59,7 @@ chrome.runtime.onMessage.addListener(
         let weight = document.getElementsByClassName("weight");
         for(var i = 0; i < categorieName.length; i++) {
           //WHY DOES THIS WORK
-          chrome.storage.local.set({[categorieName[i].innerText.toString()]: weight[i].value})
+          chrome.storage.local.set({[categorieName[i].innerText.toString()]: weight[i].value / 100})
         }
         chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
           
