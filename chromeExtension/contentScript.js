@@ -27,6 +27,7 @@ const classCategories = [
 //     let nothing = 0;
 //   }
 // })
+// I really got to do this
 
 // Hardcoded timed function to grab the headings of classes
 setTimeout(function(){
