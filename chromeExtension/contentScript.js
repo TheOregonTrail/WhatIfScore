@@ -37,7 +37,8 @@ window.addEventListener("hashchange", function() {
               let h4 = document.getElementsByTagName("h4");
               let parent = document.getElementsByClassName("col-md-2");
           
-              // FIX: Add the muted attribute to the span tag 
+              // BUG: Add the muted attribute to the span tag 
+              // BUG: Fix Empty field not being transformed into a form
               // Added or statement because if a 0 was present the expression would eval false
               for(let i = 0; i < h4.length; i++) {
                   if(parseFloat(h4[i].firstChild.data) === 0 || parseFloat(h4[i].firstChild.data)) {
@@ -96,13 +97,17 @@ window.addEventListener("hashchange", function() {
                 let afterSlash = categorieTables[x].getElementsByTagName("h4");
                 let percents = [];
                 for(let y = 0; y < pointsPerCategorie.length; y++) {
-                  let points = parseFloat(pointsPerCategorie[y].firstChild.value);
+                  if(parseFloat(pointsPerCategorie[y].firstChild.value)) {
+                    
+                    let points = parseFloat(pointsPerCategorie[y].firstChild.value);
                   
                     earnedPoints += points;
 
                     pointsPossible += parseFloat(afterSlash[y].innerText.slice(1,afterSlash[y].innerText.length));
+
+                  }
               }
-              completeTables.push( earnedPoints / pointsPossible);
+              completeTables.push(earnedPoints / pointsPossible);
             }
               return completeTables;
             }
@@ -164,7 +169,7 @@ window.addEventListener("hashchange", function() {
                         let sum = 0;
                         totalWeight += weights[x];
 
-                        sum += (totalPoints[x] * (weights[x]));
+                        sum += (totalPoints[x] * weights[x]);
                         buff.push(sum);
                       }
 
@@ -178,7 +183,7 @@ window.addEventListener("hashchange", function() {
                       console.log("Total Percentage of categories of grade added up = " + totalWeight);
                       console.log("Total Grade should be " + grade);
                       let displayedPercent = document.getElementsByTagName("h1")[1];
-                      displayedPercent.innerText = grade.toFixed(4) * 100;
+                      displayedPercent.innerText = grade.toPrecision(4) * 100;
                     }
                   }
 
